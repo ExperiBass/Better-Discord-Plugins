@@ -1,6 +1,6 @@
 /**
  * @name ServerCount
- * @version 1.0.0
+ * @version 1.0.1
  * @description Displays the number of servers you've joined.
  * @author ExperiBassMusic#3335
  * @authorId 399447908237180939
@@ -35,27 +35,36 @@
 class ServerCount {
     constructor() {
         this.name = "ServerCount"
-        this.version = "1.0.0"
+        this.version = "1.0.1"
         this.STYLES = {
             base: "color:white",
             warn: "color:yellow",
             error: "color:red",
             info: "color:cyan"
         }
+        const guildHandler = BdApi.findModuleByProps("getGuildCount")
+        this.guildCount = guildHandler.getGuildCount
+        this._log(`version ${this.version} is loaded.`)
     }
     start() {
-        const guildHandler = BdApi.findModuleByProps("getGuildCount")
-        const guildCount = guildHandler.getGuildCount()
-        const text = `${guildCount}` // needs to be string to get dimensions
         // create the guild count under the logo
         this.guildDiv = document.getElementsByClassName("guildSeparator-nWMCrR")[0]
-        const fontSize = this._getFontDimensions(text)
+        const fontSize = this._getFontDimensions(`${this.guildCount()}`)
         this.guildDiv.setAttribute("style", `height:${fontSize.actualBoundingBoxAscent}px`)
-        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center">${text}</p>`
+        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center"></p>`
+        this.display()
+        this._log(`version ${this.version} is running.`)
+    }
+    display() {
+        document.getElementById("ServerCount").innerText = this.guildCount()
     }
     stop() {
         this.guildDiv.setAttribute("style", "")
         this.guildDiv.innerHTML = ""
+    }
+    onSwitch() {
+        this.display() // should refresh the guild count
+                       // ...should.
     }
     /**
      * @param {string} text String of text to measure.
@@ -63,22 +72,23 @@ class ServerCount {
      */
     _getFontDimensions(text) {
         // stolen and modified from https://www.tutorialspoint.com/Calculate-text-width-with-JavaScript
-
         // get the font
         const logoDiv = document.getElementsByClassName("listItem-2Ig28I")[0] // discord logo div
         const font = window.getComputedStyle(logoDiv, null).getPropertyValue("font-family") // stolen from https://stackoverflow.com/a/7444724
-        const myCanvas = this.canvas || (this.canvas = document.createElement("canvas"));
+        const myCanvas = this.canvas || (this.canvas = document.createElement("canvas"))
         const context = myCanvas.getContext("2d")
-        context.font = font;
+        context.font = font
         const metrics = context.measureText(text)
+        // measuring done, yeetus deleetus
+        this.canvas = null
         return metrics
     }
     _test() {
-        this._log("Info!")
+        this._log("Info!", "INFO")
         this._log("Wawning!", "WARN")
         this._log("Ewwow!", "ERROR")
     }
-    _log(message, type = "INFO") {
+    _log(message, type = "") {
         switch (type.toLowerCase()) {
             case "info": {
                 console.log(`%c[${this.name}] [INFO]: %c${message}`, this.STYLES.info, this.STYLES.base)
@@ -91,6 +101,10 @@ class ServerCount {
             case "err": {}
             case "error": {
                 console.error(`%c[${this.name}] [INFO]: %c${message}`, this.STYLES.error, this.STYLES.base)
+                break;
+            }
+            case "": {
+                console.log(`%c[${this.name}]: %c${message}`, this.STYLES.info, this.STYLES.base)
                 break;
             }
             default: {
