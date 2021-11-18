@@ -8,8 +8,8 @@
  * @authorLink https://experibassmusic.eth.link
  * @website https://experibassmusic.eth.link
  * @ens also: ens://experibassmusic.eth
- * @source https://github.com/experibass/
- * @updateUrl
+ * @source https://github.com/experibass/Better-Discord-Plugins
+ * @updateUrl https://raw.githubusercontent.com/ExperiBass/Better-Discord-Plugins/master/src/ServerCount/ServerCount.plugin.js
  */
 
 // So i noticed about every plugin has this, apparently its a autoinstaller? anyways, YOINK! mine now >:3
