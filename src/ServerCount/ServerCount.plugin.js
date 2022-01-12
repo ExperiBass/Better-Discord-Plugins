@@ -2,7 +2,7 @@
  * @name ServerCount
  * @version 1.0.1
  * @description Displays the number of servers you've joined.
- * @author ExperiBassMusic#3335
+ * @author ExperiBassMusic
  * @authorId 399447908237180939
  * @donate https://cash.app/$experibassmusic
  * @authorLink https://experibassmusic.eth.link
@@ -48,10 +48,10 @@ class ServerCount {
     }
     start() {
         // create the guild count under the logo
-        this.guildDiv = document.getElementsByClassName("guildSeparator-nWMCrR")[0]
+        this.guildDiv = document.getElementsByClassName("guildSeparator-a4uisj")[0]
         const fontSize = this._getFontDimensions(`${this.guildCount()}`)
         this.guildDiv.setAttribute("style", `height:${fontSize.actualBoundingBoxAscent}px`)
-        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center"></p>`
+        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center;"></p>`
         this.display()
         this._log(`version ${this.version} is running.`)
     }
@@ -73,7 +73,7 @@ class ServerCount {
     _getFontDimensions(text) {
         // stolen and modified from https://www.tutorialspoint.com/Calculate-text-width-with-JavaScript
         // get the font
-        const logoDiv = document.getElementsByClassName("listItem-2Ig28I")[0] // discord logo div
+        const logoDiv = document.getElementsByClassName("listItem-3SmSlK")[0] // discord logo div
         const font = window.getComputedStyle(logoDiv, null).getPropertyValue("font-family") // stolen from https://stackoverflow.com/a/7444724
         const myCanvas = this.canvas || (this.canvas = document.createElement("canvas"))
         const context = myCanvas.getContext("2d")
