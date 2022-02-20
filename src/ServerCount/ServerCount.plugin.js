@@ -48,15 +48,21 @@ class ServerCount {
     }
     start() {
         // create the guild count under the logo
-        this.guildDiv = document.getElementsByClassName("guildSeparator-a4uisj")[0]
-        const fontSize = this._getFontDimensions(`${this.guildCount()}`)
-        this.guildDiv.setAttribute("style", `height:${fontSize.actualBoundingBoxAscent}px`)
-        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center;"></p>`
+        this.createElement()
         this.display()
         this._log(`version ${this.version} is running.`)
     }
     display() {
+        if (!document.getElementById("ServerCount")) {
+            this.createElement()
+        }
         document.getElementById("ServerCount").innerText = this.guildCount()
+    }
+    createElement() {
+        this.guildDiv = document.getElementsByClassName("guildSeparator-a4uisj")[0]
+        const fontSize = this._getFontDimensions(`${this.guildCount()}`)
+        this.guildDiv.setAttribute("style", `height:${fontSize.actualBoundingBoxAscent}px`)
+        this.guildDiv.innerHTML = `<p id="ServerCount" style="padding:0px;margin:0px;color:white;font-size:8px;text-align:center;"></p>`
     }
     stop() {
         this.guildDiv.setAttribute("style", "")
